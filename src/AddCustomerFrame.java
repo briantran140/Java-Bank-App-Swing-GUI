@@ -25,7 +25,7 @@ public class AddCustomerFrame extends BankingFrame {
 
         // remove old text fields
         labelPanel.remove(firstNameField);
-        labelPanel.remove(lastNameField);
+        labelPanel.remove(lastNameField);   
 
         // set up text fields
         firstNameField = new JTextField(25);
@@ -47,6 +47,31 @@ public class AddCustomerFrame extends BankingFrame {
     }
 
     private void addClicked() {
-//        Customer customer = new Customer();
+        String errorMsg = "";
+        errorMsg += isPresent(idField.getText(), "ID number");
+        errorMsg += isPresent(firstNameField.getText(), "First Name");
+        errorMsg += isPresent(lastNameField.getText(), "Last Name");
+        errorMsg += isPresent(addressField.getText(), "Address");
+        errorMsg += isPresent(phoneNumberField.getText(), "Phone Number");
+
+        if(errorMsg.isEmpty()) {
+            Customer customer = new Customer(idField.getText(), firstNameField.getText(),
+                    lastNameField.getText(), addressField.getText(), phoneNumberField.getText());
+            BankAppDriver.addCustomerDatabase(customer);
+            String customerName = firstNameField.getText() + " " + lastNameField.getText();
+            JOptionPane.showMessageDialog(this, customerName +  " is added successful",
+                    "Successful", JOptionPane.PLAIN_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, errorMsg,
+                    "Invalid data", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public String isPresent(String value, String name) {
+        String msg = "";
+        if (value.isEmpty()) {
+            msg = name + " is required. \n";
+        }
+        return msg;
     }
 }

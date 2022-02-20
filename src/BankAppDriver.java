@@ -14,7 +14,7 @@ public class BankAppDriver {
             Statement statement = connection.createStatement();
             statement.execute("DROP TABLE IF EXISTS customers" );
             statement.execute("CREATE TABLE IF NOT EXISTS customers" +
-                    " (ID TEXT PRIMARY KEY, FirstName TEXT NOT NULL, LastName TEXT NOT NULL, Address TEXT NOT NULL," +
+                    " (ID TEXT PRIMARY KEY NOT NULL, FirstName TEXT NOT NULL, LastName TEXT NOT NULL, Address TEXT NOT NULL," +
                     " PhoneNumber TEXT NOT NULL, AccountNumber TEXT, Balance REAL, InterestRate REAL)");
         } catch (SQLException e) {
             System.err.println(e);
@@ -28,7 +28,7 @@ public class BankAppDriver {
                 " PhoneNumber, AccountNumber, Balance, InterestRate) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
+            System.out.println(customer.getId());
             ps.setString(1, customer.getId());
             ps.setString(2, customer.getFirstName());
             ps.setString(3, customer.getLastName());
@@ -39,7 +39,7 @@ public class BankAppDriver {
                 ps.setDouble(7, customer.getBalance());
                 ps.setDouble(8, customer.getInterestRate());
             }
-            ps.executeUpdate();
+            ps.execute();
 
         } catch (SQLException e) {
             System.err.println("Customer can't be added.");

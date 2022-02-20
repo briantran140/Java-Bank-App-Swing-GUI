@@ -8,6 +8,7 @@ public class Customer {
     private SavingsAccount savingsAccount;
 
     public Customer(String id, String firstName, String lastName, String address, String phoneNumber) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
