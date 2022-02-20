@@ -14,8 +14,8 @@ public class BankAppDriver {
             Statement statement = connection.createStatement();
             statement.execute("DROP TABLE IF EXISTS customers" );
             statement.execute("CREATE TABLE IF NOT EXISTS customers" +
-                    " (ID TEXT, FirstName TEXT, LastName TEXT, Address TEXT," +
-                    " PhoneNumber TEXT, AccountNumber TEXT, Balance REAL, InterestRate REAL");
+                    " (ID TEXT PRIMARY KEY, FirstName TEXT NOT NULL, LastName TEXT NOT NULL, Address TEXT NOT NULL," +
+                    " PhoneNumber TEXT NOT NULL, AccountNumber TEXT, Balance REAL, InterestRate REAL)");
         } catch (SQLException e) {
             System.err.println(e);
             return;
