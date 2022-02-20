@@ -25,7 +25,7 @@ public class AddCustomerFrame extends BankingFrame {
 
         // remove old text fields
         labelPanel.remove(firstNameField);
-        labelPanel.remove(lastNameField);   
+        labelPanel.remove(lastNameField);
 
         // set up text fields
         firstNameField = new JTextField(25);
@@ -47,23 +47,24 @@ public class AddCustomerFrame extends BankingFrame {
     }
 
     private void addClicked() {
-        String errorMsg = BankAppDriver.errorMsg(idField,firstNameField,lastNameField,addressField,phoneNumberField);
+        String errorMsg = BankAppDriver.errorMsg(idField, firstNameField, lastNameField, addressField, phoneNumberField);
 
-        if(errorMsg.isEmpty()) {
-            Customer customer = new Customer(idField.getText(), firstNameField.getText(),
-                    lastNameField.getText(), addressField.getText(), phoneNumberField.getText());
-            boolean isAdded = BankAppDriver.addCustomerDatabase(customer);
-            String customerName = firstNameField.getText() + " " + lastNameField.getText();
-            if(isAdded) {
-                JOptionPane.showMessageDialog(this, customerName +  " is added successful",
-                        "Successful", JOptionPane.PLAIN_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, customerName +  " IS NOT ADDED. This could be because of duplicate ID number",
-                        "Invalid", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
+        if (!errorMsg.isEmpty()) {
             JOptionPane.showMessageDialog(this, errorMsg,
                     "Invalid data", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Customer customer = new Customer(idField.getText(), firstNameField.getText(),
+                lastNameField.getText(), addressField.getText(), phoneNumberField.getText());
+        boolean isAdded = BankAppDriver.addCustomerDatabase(customer);
+        String customerName = firstNameField.getText() + " " + lastNameField.getText();
+        if (isAdded) {
+            JOptionPane.showMessageDialog(this, customerName + " is added successful",
+                    "Successful", JOptionPane.PLAIN_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, customerName + " IS NOT ADDED. This could be because of duplicate ID number",
+                    "Invalid", JOptionPane.ERROR_MESSAGE);
         }
     }
 

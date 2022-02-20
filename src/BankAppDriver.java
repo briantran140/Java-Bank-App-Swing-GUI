@@ -49,6 +49,27 @@ public class BankAppDriver {
         }
     }
 
+    public static boolean updateCustomerDatabase(Customer customer) {
+        String sql = "UPDATE customers SET FirstName = ?, LastName = ?, Address = ?, PhoneNumber = ? " +
+//                "AccountNumber = ?, Balance = ?, InterestRate = ?" +
+                "WHERE ID = ?";
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, customer.getFirstName());
+            ps.setString(2, customer.getLastName());
+            ps.setString(3, customer.getAddress());
+            ps.setString(4, customer.getPhoneNumber());
+//            ps.setString(5, customer.getAccountNumber());
+//            ps.setDouble(6, customer.getBalance());
+//            ps.setDouble(7, customer.getInterestRate());
+            ps.setString(5, customer.getId());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return false;
+        }
+    }
+
     public static Customer getCustomer(String id) {
         String sql = "SELECT ID, FirstName, LastName, Address," +
                 " PhoneNumber, AccountNumber, Balance, InterestRate" +

@@ -1,8 +1,14 @@
+import java.util.Random;
+
 public class SavingsAccount {
 
     private String accountNumber;
     private double balance;
     private double interestRate;
+
+    public SavingsAccount() {
+        this.setRandomAccountNumber();
+    }
 
     public SavingsAccount(String accountNumber, double balance, double interestRate) {
         this.accountNumber = accountNumber;
@@ -33,4 +39,13 @@ public class SavingsAccount {
     public void setInterestRate(double interestRate) {
         this.interestRate = interestRate;
     }
+
+    public String setRandomAccountNumber() {
+        Random random = new Random();
+        int n = 100000 + random.nextInt(900000);
+        String accountNumber = n + "";
+        setAccountNumber(accountNumber);
+        return accountNumber;
+    }
+
 }
