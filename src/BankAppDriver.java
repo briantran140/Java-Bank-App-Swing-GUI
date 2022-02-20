@@ -1,4 +1,5 @@
 
+import javax.swing.*;
 import java.sql.*;
 
 public class BankAppDriver {
@@ -23,7 +24,6 @@ public class BankAppDriver {
     }
 
     public static void addCustomerDatabase(Customer customer) {
-
         String sql = "INSERT INTO customers (ID, FirstName, LastName, Address," +
                 " PhoneNumber, AccountNumber, Balance, InterestRate) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -39,7 +39,7 @@ public class BankAppDriver {
                 ps.setDouble(7, customer.getBalance());
                 ps.setDouble(8, customer.getInterestRate());
             }
-            ps.execute();
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             System.err.println("Customer can't be added.");
@@ -48,5 +48,76 @@ public class BankAppDriver {
         }
     }
 
+    public static Customer getCustomer(String id) {
+        String sql = "SELECT ID, FirstName, LastName, Address," +
+                " PhoneNumber, AccountNumber, Balance, InterestRate" +
+                " FROM customers WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+//                String customerID = rs.getString("ID");
+                String firstName = rs.getString("FirstName");
+                String lastName = rs.getString("LastName");
+                String address = rs.getString("Address");
+                String phoneNumber = rs.getString("PhoneNumber");
+                Customer customer = new Customer(id, firstName, lastName, address, phoneNumber);
+                String accountNumber = rs.getString("accountNumber");
+                if(accountNumber != null) {
+                    Double balance = rs.getDouble("Balance");
+                    Double interestRate = rs.getDouble("InterestRate");
+                    customer.setSavingsAccount(new SavingsAccount(accountNumber,
+                            balance, interestRate));
+                }
 
+                rs.close();
+                return customer;
+            } else {
+                rs.close();
+                return null;
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+            return null;
+        }
+    }
+
+    public static String errorMsg(JTextField idField, JTextField firstNameField, JTextField lastNameField, JTextField addressField, JTextField phoneNumberField) {
+        String errorMsg = "";
+        errorMsg += isPresent(idField.getText(), "ID number");
+        errorMsg += isPresent(firstNameField.getText(), "First Name");
+        errorMsg += isPresent(lastNameField.getText(), "Last Name");
+        errorMsg += isPresent(addressField.getText(), "Address");
+        errorMsg += isPresent(phoneNumberField.getText(), "Phone Number");
+
+        return errorMsg;
+    }
+
+    public static String isPresent(String value, String name) {
+        String msg = "";
+        if (value.isEmpty()) {
+            msg = name + " is required. \n";
+        }
+        return msg;
+    }
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

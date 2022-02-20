@@ -47,12 +47,7 @@ public class AddCustomerFrame extends BankingFrame {
     }
 
     private void addClicked() {
-        String errorMsg = "";
-        errorMsg += isPresent(idField.getText(), "ID number");
-        errorMsg += isPresent(firstNameField.getText(), "First Name");
-        errorMsg += isPresent(lastNameField.getText(), "Last Name");
-        errorMsg += isPresent(addressField.getText(), "Address");
-        errorMsg += isPresent(phoneNumberField.getText(), "Phone Number");
+        String errorMsg = BankAppDriver.errorMsg(idField,firstNameField,lastNameField,addressField,phoneNumberField);
 
         if(errorMsg.isEmpty()) {
             Customer customer = new Customer(idField.getText(), firstNameField.getText(),
@@ -67,11 +62,4 @@ public class AddCustomerFrame extends BankingFrame {
         }
     }
 
-    public String isPresent(String value, String name) {
-        String msg = "";
-        if (value.isEmpty()) {
-            msg = name + " is required. \n";
-        }
-        return msg;
-    }
 }
