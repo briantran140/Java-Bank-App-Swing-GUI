@@ -52,10 +52,15 @@ public class AddCustomerFrame extends BankingFrame {
         if(errorMsg.isEmpty()) {
             Customer customer = new Customer(idField.getText(), firstNameField.getText(),
                     lastNameField.getText(), addressField.getText(), phoneNumberField.getText());
-            BankAppDriver.addCustomerDatabase(customer);
+            boolean isAdded = BankAppDriver.addCustomerDatabase(customer);
             String customerName = firstNameField.getText() + " " + lastNameField.getText();
-            JOptionPane.showMessageDialog(this, customerName +  " is added successful",
-                    "Successful", JOptionPane.PLAIN_MESSAGE);
+            if(isAdded) {
+                JOptionPane.showMessageDialog(this, customerName +  " is added successful",
+                        "Successful", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, customerName +  " IS NOT ADDED. This could be because of duplicate ID number",
+                        "Invalid", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(this, errorMsg,
                     "Invalid data", JOptionPane.ERROR_MESSAGE);

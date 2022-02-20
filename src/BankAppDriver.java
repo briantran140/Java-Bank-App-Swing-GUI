@@ -23,7 +23,7 @@ public class BankAppDriver {
         }
     }
 
-    public static void addCustomerDatabase(Customer customer) {
+    public static boolean addCustomerDatabase(Customer customer) {
         String sql = "INSERT INTO customers (ID, FirstName, LastName, Address," +
                 " PhoneNumber, AccountNumber, Balance, InterestRate) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -40,11 +40,12 @@ public class BankAppDriver {
                 ps.setDouble(8, customer.getInterestRate());
             }
             ps.executeUpdate();
-
+            return true;
         } catch (SQLException e) {
             System.err.println("Customer can't be added.");
             System.err.println();
             e.printStackTrace();
+            return false;
         }
     }
 
