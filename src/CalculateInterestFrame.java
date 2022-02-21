@@ -30,6 +30,8 @@ public class CalculateInterestFrame extends BankingFrame {
         labelPanel.add(calculatedInterest, BankingFrame.getConstraints(0, 4));
         labelPanel.add(calculatedInterestField, BankingFrame.getConstraints(1, 4));
 
+        firstNameField.setEditable(false);
+        lastNameField.setEditable(false);
         // set up button
         calculateInterestButton = new JButton("Calculate Interest");
         calculatedInterestField.setEditable(false);
@@ -38,5 +40,39 @@ public class CalculateInterestFrame extends BankingFrame {
         // add button to button panel
         buttonPanel.add(calculateInterestButton);
         pack();
+    }
+
+    public void calculateClicked() {
+        String errorMsg = "";
+        errorMsg += BankAppDriver.isPresent(idField.getText().trim(), "ID Number");
+        errorMsg += BankAppDriver.isGreaterThanZeroDouble(interestMonthField.getText().trim(), "Interest Month");
+
+        if (!errorMsg.isEmpty()) {
+            JOptionPane.showMessageDialog(this, errorMsg,
+                    "Invalid data", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // check if customer exists
+        Customer searchedCustomer = BankAppDriver.getCustomer(idField.getText().trim());
+        if(searchedCustomer == null) {
+            JOptionPane.showMessageDialog(this, "Customer doesn't exist",
+                    "Invalid data", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        firstNameField.setText(searchedCustomer.getFirstName());
+        lastNameField.setText(searchedCustomer.getLastName());
+
+        // check if customer has a savings account
+        if(searchedCustomer.getSavingsAccount() == null) {
+            JOptionPane.showMessageDialog(this, "Customer doesn't have a savings account",
+                    "Invalid data", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // calculate interest
+        double customerInterestMonth = Double.parseDouble(interestMonthField.getText().trim());
+        double calculatedInterest = searchedCustomer.getBalance() * (searchedCustomer.getInterestRate() / 100) * (customerInterestMonth / 12);
+        calculatedInterestField.setText(calculatedInterest + "");
     }
 }

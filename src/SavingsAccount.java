@@ -45,4 +45,11 @@ public class SavingsAccount {
         return accountNumber;
     }
 
+    public boolean withdraw(double withdrawAmount) {
+        if (withdrawAmount > balance) {
+            return false;
+        }
+        balance -= withdrawAmount;
+        return true;
+    }
 }
