@@ -33,7 +33,7 @@ public class OpenAccountFrame extends AddCustomerFrame {
         }
 
         // check to see if customer already exists.
-        Customer customerDatabase = BankAppDriver.getCustomer(idField.getText());
+        Customer customerDatabase = BankAppDriver.getCustomer(idField.getText().trim());
 
 
         // If the customer exists and already has a savings account, return.
@@ -45,23 +45,23 @@ public class OpenAccountFrame extends AddCustomerFrame {
 
         // Set up a new savings account for customer.
         SavingsAccount newSavingsAccount = new SavingsAccount();
-        newSavingsAccount.setInterestRate(Double.parseDouble(interestRateField.getText()));
+        newSavingsAccount.setInterestRate(Double.parseDouble(interestRateField.getText().trim()));
 
         // if the driver doesn't exist, we will add new customer to our database with a 6 digit savings account number
-        String customerName = firstNameField.getText() + " " + lastNameField.getText();
+        String customerName = firstNameField.getText().trim() + " " + lastNameField.getText().trim();
         if (customerDatabase == null) {
-            Customer newCustomer = new Customer(idField.getText(), firstNameField.getText(),
-                    lastNameField.getText(), addressField.getText(), phoneNumberField.getText());
+            Customer newCustomer = new Customer(idField.getText().trim(), firstNameField.getText().trim(),
+                    lastNameField.getText().trim(), addressField.getText().trim(), phoneNumberField.getText().trim());
             newCustomer.setSavingsAccount(newSavingsAccount);
 
             BankAppDriver.addCustomerDatabase(newCustomer);
 
-        } else { // if the customer exists but doesn't have a savings account, we will update their information if they enter different information in the form
+        } else if(customerDatabase != null){ // if the customer exists but doesn't have a savings account, we will update their information if they enter different information in the form
             // and generate a 6 digit savings account number attached to their id number.
-            customerDatabase.setFirstName(firstNameField.getText());
-            customerDatabase.setLastName(lastNameField.getText());
-            customerDatabase.setAddress(addressField.getText());
-            customerDatabase.setPhoneNumber(phoneNumberField.getText());
+            customerDatabase.setFirstName(firstNameField.getText().trim());
+            customerDatabase.setLastName(lastNameField.getText().trim());
+            customerDatabase.setAddress(addressField.getText().trim());
+            customerDatabase.setPhoneNumber(phoneNumberField.getText().trim());
             customerDatabase.setSavingsAccount(newSavingsAccount);
 
             BankAppDriver.updateCustomerDatabase(customerDatabase);

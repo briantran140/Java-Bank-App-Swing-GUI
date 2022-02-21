@@ -74,4 +74,16 @@ public class Customer {
     public double getInterestRate() {
         return savingsAccount.getInterestRate();
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", savingsAccount=" + savingsAccount +
+                '}';
+    }
 }

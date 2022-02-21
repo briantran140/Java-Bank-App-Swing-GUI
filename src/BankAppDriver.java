@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import java.sql.*;
 
@@ -50,18 +49,21 @@ public class BankAppDriver {
     }
 
     public static boolean updateCustomerDatabase(Customer customer) {
-        String sql = "UPDATE customers SET FirstName = ?, LastName = ?, Address = ?, PhoneNumber = ? " +
-//                "AccountNumber = ?, Balance = ?, InterestRate = ?" +
+        String sql = "UPDATE customers SET FirstName = ?, LastName = ?, Address = ?, PhoneNumber = ?, " +
+                "AccountNumber = ?, Balance = ?, InterestRate = ?" +
                 "WHERE ID = ?";
         try(PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, customer.getFirstName());
             ps.setString(2, customer.getLastName());
             ps.setString(3, customer.getAddress());
             ps.setString(4, customer.getPhoneNumber());
-//            ps.setString(5, customer.getAccountNumber());
-//            ps.setDouble(6, customer.getBalance());
-//            ps.setDouble(7, customer.getInterestRate());
-            ps.setString(5, customer.getId());
+            System.out.println("hellu 1");
+            System.out.println(customer.getAccountNumber());
+            System.out.println("hellu 2");
+            ps.setString(5, customer.getAccountNumber());
+            ps.setDouble(6, customer.getBalance());
+            ps.setDouble(7, customer.getInterestRate());
+            ps.setString(8, customer.getId());
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -78,7 +80,6 @@ public class BankAppDriver {
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
-//                String customerID = rs.getString("ID");
                 String firstName = rs.getString("FirstName");
                 String lastName = rs.getString("LastName");
                 String address = rs.getString("Address");
@@ -92,6 +93,43 @@ public class BankAppDriver {
                             balance, interestRate));
                 }
 
+                rs.close();
+                return customer;
+            } else {
+                rs.close();
+                return null;
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+            return null;
+        }
+    }
+
+    public static Customer getCustomer(String firstName, String lastName) {
+        String sql = "SELECT ID, FirstName, LastName, Address," +
+                " PhoneNumber, AccountNumber, Balance, InterestRate" +
+                " FROM customers WHERE (FirstName = ? AND LastName = ?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1 , firstName);
+            ps.setString(2, lastName);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                String id = rs.getString("ID");
+                String customerFirstName = rs.getString("FirstName");
+                String customerLastName = rs.getString("LastName");
+                String address = rs.getString("Address");
+                String phoneNumber = rs.getString("PhoneNumber");
+                Customer customer = new Customer(id, customerFirstName, customerLastName, address, phoneNumber);
+                String accountNumber = rs.getString("accountNumber");
+                if(accountNumber != null) {
+                    Double balance = rs.getDouble("Balance");
+                    Double interestRate = rs.getDouble("InterestRate");
+                    customer.setSavingsAccount(new SavingsAccount(accountNumber,
+                            balance, interestRate));
+                }
+
+//                ArrayList<Customer> customerArray = new ArrayList<>();
+//                customerArray.add(customer);
                 rs.close();
                 return customer;
             } else {
@@ -122,7 +160,7 @@ public class BankAppDriver {
         errorMsg += isPresent(lastNameField.getText(), "Last Name");
         errorMsg += isPresent(addressField.getText(), "Address");
         errorMsg += isPresent(phoneNumberField.getText(), "Phone Number");
-        errorMsg += isDouble(interestRateField.getText(), "Interest Rate");
+        errorMsg += isGreaterThanZeroDouble(interestRateField.getText(), "Interest Rate");
 
         return errorMsg;
     }
@@ -143,12 +181,15 @@ public class BankAppDriver {
         return msg;
     }
 
-    public static String isDouble(String value, String name) {
+    public static String isGreaterThanZeroDouble(String value, String name) {
         String msg = "";
         try {
-            Double.parseDouble(value);
+            double numberValue = Double.parseDouble(value);
+            if (numberValue < 0) {
+                throw new NumberFormatException();
+            }
         } catch (NumberFormatException e) {
-            msg = name + " must be a valid number. \n";
+            msg = name + " must be a valid number greater than 0. \n";
         }
         return msg;
     }

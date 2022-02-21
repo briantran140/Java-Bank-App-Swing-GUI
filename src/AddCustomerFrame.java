@@ -55,10 +55,10 @@ public class AddCustomerFrame extends BankingFrame {
             return;
         }
 
-        Customer customer = new Customer(idField.getText(), firstNameField.getText(),
-                lastNameField.getText(), addressField.getText(), phoneNumberField.getText());
+        Customer customer = new Customer(idField.getText().trim(), firstNameField.getText().trim(),
+                lastNameField.getText().trim(), addressField.getText().trim(), phoneNumberField.getText().trim());
         boolean isAdded = BankAppDriver.addCustomerDatabase(customer);
-        String customerName = firstNameField.getText() + " " + lastNameField.getText();
+        String customerName = firstNameField.getText().trim() + " " + lastNameField.getText().trim();
         if (isAdded) {
             JOptionPane.showMessageDialog(this, customerName + " is added successful",
                     "Successful", JOptionPane.PLAIN_MESSAGE);
