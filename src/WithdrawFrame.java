@@ -31,6 +31,7 @@ public class WithdrawFrame extends BankingFrame {
         // set up button
         withdrawButton = new JButton("Withdraw");
         withdrawButton.setPreferredSize(new Dimension(100, 30));
+        withdrawButton.addActionListener(e -> withdrawClicked());
         // add it to the button panel
         buttonPanel.add(withdrawButton);
         pack();
@@ -69,6 +70,7 @@ public class WithdrawFrame extends BankingFrame {
             return;
         }
         searchedCustomer.getSavingsAccount().withdraw(customerWithdrawAmount);
+        BankAppDriver.updateCustomerDatabase(searchedCustomer);
         JOptionPane.showMessageDialog(this, "Withdraw successful",
                 "Successful", JOptionPane.PLAIN_MESSAGE);
     }

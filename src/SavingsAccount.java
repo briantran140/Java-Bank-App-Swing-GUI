@@ -52,4 +52,9 @@ public class SavingsAccount {
         balance -= withdrawAmount;
         return true;
     }
+
+    public boolean deposit(double depositAmount) {
+        balance += depositAmount;
+        return true;
+    }
 }
