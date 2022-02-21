@@ -115,6 +115,26 @@ public class BankAppDriver {
         return errorMsg;
     }
 
+    public static String errorMsg(JTextField idField, JTextField firstNameField, JTextField lastNameField, JTextField addressField, JTextField phoneNumberField, JTextField interestRateField) {
+        String errorMsg = "";
+        errorMsg += isPresent(idField.getText(), "ID number");
+        errorMsg += isPresent(firstNameField.getText(), "First Name");
+        errorMsg += isPresent(lastNameField.getText(), "Last Name");
+        errorMsg += isPresent(addressField.getText(), "Address");
+        errorMsg += isPresent(phoneNumberField.getText(), "Phone Number");
+        errorMsg += isDouble(interestRateField.getText(), "Interest Rate");
+
+        return errorMsg;
+    }
+
+    public static String errorMsg(JTextField firstNameField, JTextField lastNameField) {
+        String errorMsg = "";
+        errorMsg += isPresent(firstNameField.getText(), "First Name");
+        errorMsg += isPresent(lastNameField.getText(), "Last Name");
+
+        return errorMsg;
+    }
+
     public static String isPresent(String value, String name) {
         String msg = "";
         if (value.isEmpty()) {
@@ -122,7 +142,17 @@ public class BankAppDriver {
         }
         return msg;
     }
-    
+
+    public static String isDouble(String value, String name) {
+        String msg = "";
+        try {
+            Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            msg = name + " must be a valid number. \n";
+        }
+        return msg;
+    }
+
 }
 
 

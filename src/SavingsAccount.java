@@ -28,9 +28,6 @@ public class SavingsAccount {
         return balance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
 
     public double getInterestRate() {
         return interestRate;
