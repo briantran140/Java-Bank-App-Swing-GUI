@@ -13,7 +13,7 @@ public class BankAppDriver {
             String dbURL = "jdbc:sqlite:bank.sqlite";
             connection = DriverManager.getConnection(dbURL);
             Statement statement = connection.createStatement();
-            statement.execute("DROP TABLE IF EXISTS customers" );
+//            statement.execute("DROP TABLE IF EXISTS customers" );
             statement.execute("CREATE TABLE IF NOT EXISTS customers" +
                     " (ID TEXT PRIMARY KEY NOT NULL, FirstName TEXT NOT NULL, LastName TEXT NOT NULL, Address TEXT NOT NULL," +
                     " PhoneNumber TEXT NOT NULL, AccountNumber TEXT, Balance REAL, InterestRate REAL)");

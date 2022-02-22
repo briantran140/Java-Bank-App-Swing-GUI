@@ -90,7 +90,7 @@ public class SearchResultFrame extends OpenAccountFrame {
         if(customer.getSavingsAccount() != null) {
             accountNumberField.setText(customer.getAccountNumber());
             balanceField.setText(customer.getBalance() + "");
-            interestRateField.setText(customer.getInterestRate() + "");
+            interestRateField.setText(customer.getInterestRate() + "%");
         }
     }
 }
