@@ -13,14 +13,10 @@ public class WithdrawFrame extends BankingFrame {
         this.setTitle("App - Withdraw");
 
         // set up labels and their fields
-//        accountNumber = new JLabel("Account Number:");
-//        accountNumberField = new JTextField(20);
         withdrawAmount = new JLabel("Withdraw Amount:");
         withdrawAmountField = new JTextField(25);
 
         // add them to the label panel
-//        labelPanel.add(accountNumber, BankingFrame.getConstraints(0, 2));
-//        labelPanel.add(accountNumberField, BankingFrame.getConstraints(1, 2));
         labelPanel.add(withdrawAmount, BankingFrame.getConstraints(0, 1));
         labelPanel.add(withdrawAmountField, BankingFrame.getConstraints(1, 1));
         labelPanel.remove(firstName);
@@ -69,6 +65,7 @@ public class WithdrawFrame extends BankingFrame {
                     "Invalid data", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
         searchedCustomer.getSavingsAccount().withdraw(customerWithdrawAmount);
         BankAppDriver.updateCustomerDatabase(searchedCustomer);
         JOptionPane.showMessageDialog(this, "Withdraw successful",

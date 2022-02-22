@@ -3,8 +3,9 @@ import java.awt.*;
 
 public class OpenAccountFrame extends AddCustomerFrame {
 
-    private JLabel interestRate;
-    private JTextField interestRateField;
+    protected JLabel interestRate;
+    protected JTextField interestRateField;
+    protected JButton openAccountButton;
 
     public OpenAccountFrame() {
         this.setTitle("Banking App - Open Account");
@@ -14,7 +15,7 @@ public class OpenAccountFrame extends AddCustomerFrame {
 
         labelPanel.add(interestRate, BankingFrame.getConstraints(0 ,5));
         labelPanel.add(interestRateField, BankingFrame.getConstraints(1, 5));
-        JButton openAccountButton = new JButton("Open Account");
+        openAccountButton = new JButton("Open Account");
         openAccountButton.setPreferredSize(new Dimension(120, 30));
         openAccountButton.addActionListener(e -> openAccountClicked());
         buttonPanel.remove(addButton);

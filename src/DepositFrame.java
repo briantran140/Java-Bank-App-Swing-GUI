@@ -13,14 +13,10 @@ public class DepositFrame extends BankingFrame {
         this.setTitle("App - Deposit");
 
         // set up labels and their fields
-//        accountNumber = new JLabel("Account Number:");
-//        accountNumberField = new JTextField(20);
         depositAmount = new JLabel("Deposit Amount:");
         depositAmountField = new JTextField(25);
 
         // add them to the label panel
-//        labelPanel.add(accountNumber, BankingFrame.getConstraints(0, 2));
-//        labelPanel.add(accountNumberField, BankingFrame.getConstraints(1, 2));
         labelPanel.add(depositAmount, BankingFrame.getConstraints(0, 1));
         labelPanel.add(depositAmountField, BankingFrame.getConstraints(1, 1));
         labelPanel.remove(firstName);
@@ -40,7 +36,7 @@ public class DepositFrame extends BankingFrame {
     public void depositClicked() {
         String errorMsg = "";
         errorMsg += BankAppDriver.isPresent(idField.getText().trim(), "ID Number");
-        errorMsg += BankAppDriver.isGreaterThanZeroDouble(depositAmountField.getText().trim(), "Withdraw Amount");
+        errorMsg += BankAppDriver.isGreaterThanZeroDouble(depositAmountField.getText().trim(), "Deposit Amount");
 
         if (!errorMsg.isEmpty()) {
             JOptionPane.showMessageDialog(this, errorMsg,
