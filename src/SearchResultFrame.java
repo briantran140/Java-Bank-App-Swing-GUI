@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -57,26 +58,26 @@ public class SearchResultFrame extends OpenAccountFrame {
     }
 
     private void previousCustomerClicked() {
-        if(arrayIndex == 0) {
+        if (arrayIndex == 0) {
             JOptionPane.showMessageDialog(this, "There is no previous customer.",
                     "Invalid Data", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         arrayIndex--;
-        System.out.println("Array index:" + arrayIndex);
+        emptyTextField();
         showCustomer();
     }
 
     private void nextCustomerClicked() {
-        if(arrayIndex == customerArrayList.size() - 1) {
+        if (arrayIndex == customerArrayList.size() - 1) {
             JOptionPane.showMessageDialog(this, "There is no next customer.",
                     "Invalid Data", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         arrayIndex++;
-        System.out.println("Array index:" + arrayIndex);
+        emptyTextField();
         showCustomer();
     }
 
@@ -87,10 +88,21 @@ public class SearchResultFrame extends OpenAccountFrame {
         lastNameField.setText(customer.getLastName());
         addressField.setText(customer.getAddress());
         phoneNumberField.setText(customer.getPhoneNumber());
-        if(customer.getSavingsAccount() != null) {
+        if (customer.getSavingsAccount() != null) {
             accountNumberField.setText(customer.getAccountNumber());
             balanceField.setText(customer.getBalance() + "");
             interestRateField.setText(customer.getInterestRate() + "%");
         }
+    }
+
+    private void emptyTextField() {
+        idField.setText("");
+        firstNameField.setText("");
+        lastNameField.setText("");
+        addressField.setText("");
+        phoneNumberField.setText("");
+        accountNumberField.setText("");
+        balanceField.setText("");
+        interestRateField.setText("");
     }
 }
